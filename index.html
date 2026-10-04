@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan Digital - Rian & Sinta</title>
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fcf8f5;
+            color: #4a4a4a;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+        }
+
+        /* Cover Awal */
+        #cover {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 999;
+            transition: transform 1s ease-in-out;
+        }
+
+        #cover h1 {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .btn-buka {
+            padding: 12px 30px;
+            background-color: #d4af37;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+
+        .btn-buka:hover {
+            background-color: #b38f27;
+            transform: scale(1.05);
+        }
+
+        /* Konten Utama */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            min-height: 100vh;
+            display: none; /* Disembunyikan dulu sebelum tombol buka diklik */
+        }
+
+        header {
+            padding: 60px 20px;
+            background: #fff5f0;
+        }
+
+        header h2 {
+            font-size: 2.5rem;
+            color: #8c6d48;
+            margin: 15px 0;
+        }
+
+        /* Bagian Countdown */
+        .countdown-section {
+            padding: 40px 20px;
+            background: #f7f3ef;
+        }
+
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .box-time {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            min-width: 70px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .box-time span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #8c6d48;
+        }
+
+        .box-time small {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        /* Bagian Ucapan */
+        .wishes-section {
+            padding: 40px 20px;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-kirim {
+            background: #8c6d48;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .list-ucapan {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .ucapan-item {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .ucapan-item strong {
+            font-size: 0.9rem;
+            color: #2c3e50;
+        }
+
+        .ucapan-item p {
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        footer {
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cover Depan Undangan -->
+    <div id="cover">
+        <p>Kepada Yth. Bapak/Ibu/Saudara/i</p>
+        <h1>Tamu Undangan</h1>
+        <p>Kami mengundang Anda untuk hadir di acara pernikahan kami.</p>
+        <button class="btn-buka" onclick="bukaUndangan()">Buka Undangan</button>
+    </div>
+
+    <!-- Halaman Utama Undangan -->
+    <div class="container" id="mainContent">
+        <header>
+            <p>The Wedding of</p>
+            <h2>Rian & Sinta</h2>
+            <p>15 Desember 2026</p>
+        </header>
+
+        <!-- Hitung Mundur -->
+        <section class="countdown-section">
+            <h3>Menuju Hari Bahagia</h3>
+            <div class="countdown-grid">
+                <div class="box-time">
+                    <span id="days">00</span>
+                    <small>Hari</small>
+                </div>
+                <div class="box-time">
+                    <span id="hours">00</span>
+                    <small>Jam</small>
+                </div>
+                <div class="box-time">
+                    <span id="minutes">00</span>
+                    <small>Menit</small>
+                </div>
+                <div class="box-time">
+                    <span id="seconds">00</span>
+                    <small>Detik</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Buku Tamu & Ucapan -->
+        <section class="wishes-section">
+            <h3>Berikan Ucapan & Doa</h3>
+            <div class="form-group">
+                <label>Nama Anda:</label>
+                <input type="text" id="namaInput" placeholder="Masukkan nama...">
+            </div>
+            <div class="form-group">
+                <label>Ucapan & Doa:</label>
+                <textarea id="pesanInput" rows="3" placeholder="Tulis ucapan selamat..."></textarea>
+            </div>
+            <button class="btn-kirim" onclick="kirimUcapan()">Kirim Ucapan</button>
+
+            <div class="list-ucapan" id="listUcapan">
+                <div class="ucapan-item">
+                    <strong>Budi Santoso</strong>
+                    <p>Selamat ya Rian & Sinta! Semoga sakinah mawaddah warahmah.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Dibuat dengan ❤️ oleh Kelompok Jasa Undangan Digital</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript Interaktif -->
+    <script>
+        // Fungsi untuk membuka undangan dari halaman cover
+        function bukaUndangan() {
+            const cover = document.getElementById('cover');
+            const mainContent = document.getElementById('mainContent');
+            
+            cover.style.transform = 'translateY(-100%)';
+            setTimeout(() => {
+                cover.style.display = 'none';
+                mainContent.style.display = 'block';
+            }, 600);
+        }
+
+        // Script Hitung Mundur (Countdown Timer) ke tanggal 15 Desember 2026
+        const weddingDate = new Date("Dec 15, 2026 09:00:00").getTime();
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+        }, 1000);
+
+        // Fungsi interaktif untuk mengirim ucapan secara langsung di halaman
+        function kirimUcapan() {
+            const nama = document.getElementById('namaInput').value;
+            const pesan = document.getElementById('pesanInput').value;
+            const list = document.getElementById('listUcapan');
+
+            if (nama.trim() === "" || pesan.trim() === "") {
+                alert("Mohon isi nama dan pesan terlebih dahulu!");
+                return;
+            }
+
+            const newItem = document.createElement('div');
+            newItem.classList.add('ucapan-item');
+            newItem.innerHTML = `<strong>${nama}</strong><p>${pesan}</p>`;
+
+            list.prepend(newItem); // Menambahkan ucapan terbaru di atas
+
+            // Bersihkan kolom input
+            document.getElementById('namaInput').value = "";
+            document.getElementById('pesanInput').value = "";
+        }
+    </script>
+</body>
+</html>
